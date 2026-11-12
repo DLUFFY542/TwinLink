@@ -1,0 +1,73 @@
+{
+  "name": "twinlink",
+  "productName": "Twinlink",
+  "version": "0.1.0",
+  "description": "Plug-and-play Android screen mirroring and control for Windows.",
+  "main": "src/main/main.js",
+  "author": "Twinlink",
+  "license": "MIT",
+  "private": true,
+  "scripts": {
+    "start": "electron .",
+    "test": "node --test tests/*.test.js",
+    "check": "node checks/smoke.js",
+    "check:pipeline": "electron checks/pipeline.js",
+    "check:device": "node checks/device.js",
+    "check:recording": "electron checks/recording.js",
+    "pack": "electron-builder --win --x64 --dir",
+    "dist": "electron-builder --win --x64"
+  },
+  "devDependencies": {
+    "electron": "45.3.1",
+    "electron-builder": "26.18.0"
+  },
+  "build": {
+    "appId": "com.twinlink.app",
+    "productName": "Twinlink",
+    "directories": {
+      "output": "build",
+      "buildResources": "assets"
+    },
+    "files": [
+      "src/**/*",
+      "assets/**/*",
+      "package.json",
+      "!**/*.map"
+    ],
+    "extraResources": [
+      {
+        "from": "vendor/scrcpy-server-v4.0.jar",
+        "to": "vendor/scrcpy-server-v4.0.jar"
+      },
+      {
+        "from": "vendor/scrcpy-LICENSE.txt",
+        "to": "vendor/scrcpy-LICENSE.txt"
+      }
+    ],
+    "asar": true,
+    "win": {
+      "target": [
+        {
+          "target": "nsis",
+          "arch": ["x64"]
+        },
+        {
+          "target": "portable",
+          "arch": ["x64"]
+        }
+      ],
+      "icon": "assets/icon.ico"
+    },
+    "nsis": {
+      "oneClick": false,
+      "perMachine": false,
+      "allowToChangeInstallationDirectory": true,
+      "createDesktopShortcut": true,
+      "shortcutName": "Twinlink",
+      "artifactName": "Twinlink-Setup-${version}.${ext}"
+    },
+    "portable": {
+      "artifactName": "Twinlink-Portable-${version}.${ext}"
+    }
+  }
+}

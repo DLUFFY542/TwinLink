@@ -1,0 +1,36 @@
+# Dependencies
+node_modules/
+package-lock.json
+
+# Build output
+build/
+dist/
+out/
+*.asar
+
+# Logs and local artifacts
+*.log
+logs/
+.tmp/
+tmp/
+scratch/
+recording-*.mp4
+screenshot-*.png
+
+# OS / editor
+Thumbs.db
+Desktop.ini
+.DS_Store
+.vscode/
+.idea/
+*.swp
+
+# Local secrets / machine-specific overrides
+.env
+.env.*
+settings.local.json
+
+# Test scratch output
+tests/.artifacts/
+checks/.artifacts/
+
