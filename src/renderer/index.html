@@ -1,0 +1,478 @@
+<!doctype html>
+<html lang="en" data-theme="dark">
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      http-equiv="Content-Security-Policy"
+      content="default-src 'none'; script-src 'self'; style-src 'self'; img-src 'self' data: blob:; media-src 'self' blob:; font-src 'self'; connect-src 'none'; object-src 'none'; base-uri 'none'; form-action 'none'"
+    />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Twinlink</title>
+    <link rel="stylesheet" href="styles/app.css" />
+  </head>
+  <body>
+    <svg class="sprite" aria-hidden="true">
+      <symbol id="i-phone" viewBox="0 0 24 24"><rect x="7" y="2.5" width="10" height="19" rx="2.4" /><path d="M10.5 5.5h3" /></symbol>
+      <symbol id="i-back" viewBox="0 0 24 24"><path d="M15 5l-7 7 7 7" /></symbol>
+      <symbol id="i-home" viewBox="0 0 24 24"><path d="M4 11.5L12 4l8 7.5" /><path d="M6.5 10.5V20h11v-9.5" /></symbol>
+      <symbol id="i-recents" viewBox="0 0 24 24"><rect x="4.5" y="4.5" width="15" height="15" rx="2.5" /></symbol>
+      <symbol id="i-rotate" viewBox="0 0 24 24"><path d="M20 12a8 8 0 1 1-2.6-5.9" /><path d="M20 4v4.5h-4.5" /></symbol>
+      <symbol id="i-volume-up" viewBox="0 0 24 24"><path d="M4 9.5h3.5L12 5.5v13L7.5 14.5H4z" /><path d="M16 9a4.5 4.5 0 0 1 0 6" /><path d="M18.5 6.5a8 8 0 0 1 0 11" /></symbol>
+      <symbol id="i-volume-down" viewBox="0 0 24 24"><path d="M4 9.5h3.5L12 5.5v13L7.5 14.5H4z" /><path d="M16 9a4.5 4.5 0 0 1 0 6" /></symbol>
+      <symbol id="i-power" viewBox="0 0 24 24"><path d="M12 3v8" /><path d="M7 6.5a7.5 7.5 0 1 0 10 0" /></symbol>
+      <symbol id="i-bell" viewBox="0 0 24 24"><path d="M6 16V11a6 6 0 1 1 12 0v5l1.5 2h-15z" /><path d="M10 20a2 2 0 0 0 4 0" /></symbol>
+      <symbol id="i-sliders" viewBox="0 0 24 24"><path d="M5 7h14M5 12h14M5 17h14" /><circle cx="9" cy="7" r="2" /><circle cx="15" cy="12" r="2" /><circle cx="9" cy="17" r="2" /></symbol>
+      <symbol id="i-camera" viewBox="0 0 24 24"><rect x="3.5" y="7" width="17" height="12" rx="2.4" /><path d="M8 7l1.5-2.5h5L16 7" /><circle cx="12" cy="13" r="3.4" /></symbol>
+      <symbol id="i-record" viewBox="0 0 24 24"><circle cx="12" cy="12" r="6.5" /></symbol>
+      <symbol id="i-expand" viewBox="0 0 24 24"><path d="M4 9V4h5M20 15v5h-5M15 4h5v5M9 20H4v-5" /></symbol>
+      <symbol id="i-close" viewBox="0 0 24 24"><path d="M6 6l12 12M18 6L6 18" /></symbol>
+      <symbol id="i-usb" viewBox="0 0 24 24"><path d="M12 3v13" /><path d="M12 3l3 3M12 3L9 6" /><circle cx="12" cy="18.5" r="2.2" /><path d="M12 15.5V16" /></symbol>
+      <symbol id="i-wifi" viewBox="0 0 24 24"><path d="M3 9a14 14 0 0 1 18 0" /><path d="M6.5 12.5a9 9 0 0 1 11 0" /><path d="M10 16a4 4 0 0 1 4 0" /><circle cx="12" cy="19" r="1.2" /></symbol>
+      <symbol id="i-alert" viewBox="0 0 24 24"><path d="M12 4l9 16H3z" /><path d="M12 10v4" /><circle cx="12" cy="17" r="1" /></symbol>
+      <symbol id="i-muted" viewBox="0 0 24 24"><path d="M4 9.5h3.5L12 5.5v13L7.5 14.5H4z" /><path d="M16 9l5 6M21 9l-5 6" /></symbol>
+      <symbol id="i-check" viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7" /></symbol>
+    </svg>
+
+    <div class="app-shell">
+      <header class="topbar">
+        <div class="brand">
+          <div class="brand-mark" aria-hidden="true">
+            <svg viewBox="0 0 32 32">
+              <rect x="8" y="3" width="16" height="26" rx="4" />
+              <path d="M13 7h6" />
+              <path d="M12 13h8M12 17h8M12 21h5" />
+            </svg>
+          </div>
+          <div class="brand-copy">
+            <span class="brand-name">Twinlink</span>
+            <span class="brand-sub">Android mirroring</span>
+          </div>
+        </div>
+
+        <nav class="tabs" role="tablist" aria-label="Main views">
+          <button class="tab is-active" data-view="dashboard" role="tab" aria-selected="true">Devices</button>
+          <button class="tab" data-view="mirror" role="tab" aria-selected="false">Mirror</button>
+          <button class="tab" data-view="settings" role="tab" aria-selected="false">Settings</button>
+        </nav>
+
+        <div class="topbar-right">
+          <span class="chip" id="adb-chip" title="ADB status">
+            <span class="dot" id="adb-dot"></span>
+            <span id="adb-chip-text">Checking adb…</span>
+          </span>
+        </div>
+      </header>
+
+      <main class="content">
+        <!-- ============================ DASHBOARD ============================ -->
+        <section class="view is-active" id="view-dashboard">
+          <div class="page-head">
+            <div>
+              <h2>Your devices</h2>
+              <p class="muted">Connect a phone over USB, authorize debugging, then start mirroring.</p>
+            </div>
+            <div class="page-actions">
+              <button class="btn btn-ghost" id="refresh-devices">Refresh</button>
+              <button class="btn btn-primary" id="open-wireless">
+                <svg class="icon"><use href="#i-wifi" /></svg>
+                Wireless
+              </button>
+            </div>
+          </div>
+
+          <div class="alert hidden" id="adb-alert">
+            <svg class="icon"><use href="#i-alert" /></svg>
+            <div class="alert-body">
+              <strong id="adb-alert-title">adb not found</strong>
+              <span id="adb-alert-text"></span>
+            </div>
+            <div class="alert-actions">
+              <button class="btn btn-small" id="adb-locate">Locate adb.exe</button>
+              <button class="btn btn-small btn-ghost" id="adb-recheck">Recheck</button>
+            </div>
+          </div>
+
+          <div class="device-grid" id="device-grid"></div>
+
+          <div class="empty-state" id="dashboard-empty">
+            <div class="empty-art" aria-hidden="true">
+              <svg viewBox="0 0 120 120">
+                <rect x="34" y="14" width="52" height="92" rx="12" />
+                <path d="M52 22h16" />
+                <rect x="44" y="34" width="32" height="54" rx="4" class="empty-screen" />
+                <path d="M56 96h8" />
+              </svg>
+            </div>
+            <h3>No phone connected</h3>
+            <ol class="steps">
+              <li><span>1</span> Plug the Android phone into this PC with a USB data cable.</li>
+              <li><span>2</span> On the phone, open <em>Developer options</em> and enable <em>USB debugging</em>.</li>
+              <li><span>3</span> Accept the “Allow USB debugging?” prompt on the phone.</li>
+            </ol>
+            <p class="muted small">The phone appears here automatically — no refresh needed.</p>
+          </div>
+
+          <div class="info-strip">
+            <div>
+              <strong>Local only.</strong>
+              Video and input travel over the USB (or Wi-Fi) connection that adb already provides. Twinlink never uploads screen data.
+            </div>
+            <div>
+              <strong>Your authorization stays with Android.</strong>
+              Twinlink uses the standard debugging bridge and never bypasses the on-device prompt.
+            </div>
+          </div>
+        </section>
+
+        <!-- ============================== MIRROR ============================= -->
+        <section class="view" id="view-mirror">
+          <div class="mirror-grid">
+            <div class="stage-wrap">
+              <div class="stage" id="stage">
+                <canvas id="phone-canvas" width="720" height="1280" aria-label="Mirrored phone screen"></canvas>
+
+                <div class="stage-placeholder" id="stage-placeholder">
+                  <h3>No active session</h3>
+                  <p class="muted">Choose a device and press Connect.</p>
+                  <button class="btn btn-primary" id="stage-connect">Go to devices</button>
+                </div>
+
+                <div class="stage-loading hidden" id="stage-loading">
+                  <span class="spinner"></span>
+                  <span id="stage-loading-text">Connecting…</span>
+                </div>
+
+                <div class="stage-badges" id="stage-badges">
+                  <span class="chip chip-dark" id="mirror-res">—</span>
+                  <span class="chip chip-dark" id="mirror-stats">—</span>
+                </div>
+
+                <button class="btn btn-small stage-exit" id="btn-exit-fullscreen" title="Exit fullscreen (Esc)">
+                  Exit fullscreen
+                </button>
+              </div>
+            </div>
+
+            <aside class="control-rail" aria-label="Phone controls">
+              <div class="rail-group">
+                <button class="icon-btn" data-action="back" title="Back (or right-click)">
+                  <svg class="icon"><use href="#i-back" /></svg><span>Back</span>
+                </button>
+                <button class="icon-btn" data-action="home" title="Home (or middle-click)">
+                  <svg class="icon"><use href="#i-home" /></svg><span>Home</span>
+                </button>
+                <button class="icon-btn" data-action="recents" title="Recent apps">
+                  <svg class="icon"><use href="#i-recents" /></svg><span>Recents</span>
+                </button>
+                <button class="icon-btn" data-action="rotate" title="Rotate device">
+                  <svg class="icon"><use href="#i-rotate" /></svg><span>Rotate</span>
+                </button>
+              </div>
+
+              <div class="rail-group">
+                <button class="icon-btn" data-action="volumeUp" title="Volume up">
+                  <svg class="icon"><use href="#i-volume-up" /></svg><span>Vol +</span>
+                </button>
+                <button class="icon-btn" data-action="volumeDown" title="Volume down">
+                  <svg class="icon"><use href="#i-volume-down" /></svg><span>Vol −</span>
+                </button>
+                <button class="icon-btn" data-action="power" title="Power / lock">
+                  <svg class="icon"><use href="#i-power" /></svg><span>Power</span>
+                </button>
+              </div>
+
+              <div class="rail-group">
+                <button class="icon-btn" data-action="notifications" title="Pull down notifications">
+                  <svg class="icon"><use href="#i-bell" /></svg><span>Notify</span>
+                </button>
+                <button class="icon-btn" data-action="quickSettings" title="Quick settings panel">
+                  <svg class="icon"><use href="#i-sliders" /></svg><span>Panel</span>
+                </button>
+                <button class="icon-btn" data-action="collapsePanels" title="Close panels">
+                  <svg class="icon"><use href="#i-close" /></svg><span>Close</span>
+                </button>
+              </div>
+
+              <div class="rail-group">
+                <button class="icon-btn" data-rail="screenshot" title="Save screenshot">
+                  <svg class="icon"><use href="#i-camera" /></svg><span>Shot</span>
+                </button>
+                <button class="icon-btn" data-rail="record" title="Record screen (WebM)">
+                  <svg class="icon"><use href="#i-record" /></svg><span id="record-label">Record</span>
+                </button>
+                <button class="icon-btn" data-rail="fullscreen" title="Fullscreen (F11)">
+                  <svg class="icon"><use href="#i-expand" /></svg><span>Full</span>
+                </button>
+                <button class="icon-btn hidden" data-rail="mute" id="mute-btn" title="Mute phone audio">
+                  <svg class="icon"><use href="#i-muted" /></svg><span>Mute</span>
+                </button>
+              </div>
+            </aside>
+          </div>
+
+          <div class="mirror-footer">
+            <div class="device-line">
+              <svg class="icon"><use href="#i-phone" /></svg>
+              <span id="mirror-device-name">Not connected</span>
+              <span class="state-pill" id="mirror-state-pill" data-state="idle">Idle</span>
+            </div>
+            <div class="mirror-actions">
+              <button class="btn" id="btn-screenshot">Screenshot</button>
+              <button class="btn" id="btn-recording">Record</button>
+              <button class="btn" id="btn-fullscreen" title="Toggle fullscreen (F11)">Fullscreen</button>
+              <button class="btn btn-danger" id="btn-disconnect" disabled>Disconnect</button>
+            </div>
+          </div>
+
+          <p class="hint">
+            Left click = tap · Right click = back · Middle click = home · Scroll wheel = scroll ·
+            Keyboard input is sent to the phone while this tab is open.
+          </p>
+        </section>
+
+        <!-- ============================= SETTINGS =========================== -->
+        <section class="view" id="view-settings">
+          <div class="page-head">
+            <div>
+              <h2>Settings</h2>
+              <p class="muted">Changes apply to the next connection (video settings) or immediately (appearance).</p>
+            </div>
+          </div>
+
+          <div class="settings-grid">
+            <section class="card">
+              <h3>Video</h3>
+
+              <label class="field">
+                <span>Resolution</span>
+                <select id="set-resolution">
+                  <option value="720">720p (max long edge)</option>
+                  <option value="1080">1080p (max long edge)</option>
+                  <option value="1440">1440p (max long edge)</option>
+                  <option value="0">Native device resolution</option>
+                </select>
+              </label>
+
+              <label class="field">
+                <span>Frame rate</span>
+                <select id="set-fps">
+                  <option value="30">30 fps</option>
+                  <option value="60">60 fps</option>
+                  <option value="90">90 fps</option>
+                  <option value="120">120 fps (device permitting)</option>
+                </select>
+              </label>
+
+              <label class="field">
+                <span>Video bitrate</span>
+                <select id="set-bitrate">
+                  <option value="2000000">2 Mbps — low bandwidth</option>
+                  <option value="4000000">4 Mbps</option>
+                  <option value="8000000">8 Mbps — balanced</option>
+                  <option value="12000000">12 Mbps — sharp</option>
+                  <option value="16000000">16 Mbps</option>
+                  <option value="24000000">24 Mbps — maximum</option>
+                </select>
+              </label>
+
+              <label class="toggle">
+                <input type="checkbox" id="set-touches" />
+                <span>Show touches on the device</span>
+              </label>
+
+              <label class="toggle">
+                <input type="checkbox" id="set-stayawake" />
+                <span>Keep the device awake while mirroring</span>
+              </label>
+            </section>
+
+            <section class="card">
+              <h3>Audio <span class="tag tag-warn">Experimental</span></h3>
+              <p class="muted small">
+                Audio forwarding uses the scrcpy OPUS stream and Web Audio. It is implemented but
+                <strong>has not been validated on a physical device yet</strong> — enable it only to test.
+                Devices on Android 11+ are the most likely to work.
+              </p>
+              <label class="toggle">
+                <input type="checkbox" id="set-audio" />
+                <span>Forward device audio</span>
+              </label>
+              <label class="field">
+                <span>Audio bitrate</span>
+                <select id="set-audiobitrate">
+                  <option value="64000">64 kbps</option>
+                  <option value="128000">128 kbps</option>
+                  <option value="256000">256 kbps</option>
+                </select>
+              </label>
+            </section>
+
+            <section class="card">
+              <h3>Connection</h3>
+              <label class="toggle">
+                <input type="checkbox" id="set-autoreconnect" />
+                <span>Reconnect automatically after an interruption</span>
+              </label>
+              <label class="field">
+                <span>Reconnect attempts</span>
+                <select id="set-attempts">
+                  <option value="0">None</option>
+                  <option value="1">1</option>
+                  <option value="3">3</option>
+                  <option value="5">5</option>
+                  <option value="10">10</option>
+                </select>
+              </label>
+              <label class="field">
+                <span>Scroll sensitivity</span>
+                <input type="range" id="set-scroll" min="0.25" max="4" step="0.25" />
+                <output id="set-scroll-out">1×</output>
+              </label>
+              <div class="field-row">
+                <div>
+                  <span class="field-label">adb executable</span>
+                  <code class="path" id="adb-path">not found</code>
+                </div>
+                <button class="btn btn-small" id="set-pick-adb">Locate…</button>
+              </div>
+            </section>
+
+            <section class="card">
+              <h3>Recording</h3>
+              <label class="field">
+                <span>Format</span>
+                <select id="set-recording-format">
+                  <option value="webm-vp9">WebM (VP9)</option>
+                  <option value="webm-vp8">WebM (VP8)</option>
+                  <option value="webm-av1">WebM (AV1)</option>
+                  <option value="mp4-h264">MP4 (H.264)</option>
+                </select>
+              </label>
+              <p class="muted small" id="recording-format-note">
+                Formats this build cannot encode are disabled automatically.
+              </p>
+            </section>
+
+            <section class="card">
+              <h3>Appearance</h3>
+              <label class="field">
+                <span>Theme</span>
+                <select id="set-theme">
+                  <option value="system">Follow Windows</option>
+                  <option value="dark">Dark</option>
+                  <option value="light">Light</option>
+                </select>
+              </label>
+              <label class="toggle">
+                <input type="checkbox" id="set-stats" />
+                <span>Show performance overlay while mirroring</span>
+              </label>
+            </section>
+
+            <section class="card card-wide">
+              <h3>Troubleshooting</h3>
+              <dl class="diag">
+                <div><dt>adb version</dt><dd id="diag-adb">—</dd></div>
+                <div><dt>adb source</dt><dd id="diag-adb-source">—</dd></div>
+                <div><dt>Mirroring server</dt><dd id="diag-server">—</dd></div>
+                <div><dt>Server checksum</dt><dd id="diag-checksum">—</dd></div>
+                <div><dt>Twinlink / Electron</dt><dd id="diag-versions">—</dd></div>
+                <div><dt>Settings file</dt><dd id="diag-settings-path">—</dd></div>
+              </dl>
+              <div class="card-actions">
+                <button class="btn btn-small" id="diag-refresh">Re-run checks</button>
+                <button class="btn btn-small btn-ghost" id="open-platform-tools">Android Platform Tools download</button>
+                <button class="btn btn-small btn-ghost" id="reset-settings">Reset settings</button>
+              </div>
+              <p class="muted small">
+                Tips: use a data-capable USB cable, unlock the phone when accepting the debugging prompt,
+                and revoke old authorizations if the prompt does not appear.
+              </p>
+            </section>
+          </div>
+        </section>
+      </main>
+    </div>
+
+    <!-- ============================ WIRELESS MODAL ========================= -->
+    <div class="modal hidden" id="wireless-modal" role="dialog" aria-modal="true" aria-labelledby="wireless-title">
+      <div class="modal-card">
+        <header class="modal-head">
+          <div>
+            <h3 id="wireless-title">Wireless debugging</h3>
+            <p class="muted small">Android 11+ · phone and PC must be on the same network</p>
+          </div>
+          <button class="icon-btn icon-only" id="close-wireless" title="Close">
+            <svg class="icon"><use href="#i-close" /></svg>
+          </button>
+        </header>
+
+        <div class="modal-tabs">
+          <button class="seg is-active" data-wtab="pair">1 · Pair</button>
+          <button class="seg" data-wtab="connect">2 · Connect</button>
+          <button class="seg" data-wtab="qr">QR code</button>
+          <button class="seg" data-wtab="discovered">Discovered</button>
+        </div>
+
+        <div class="modal-body">
+          <div class="wtab is-active" id="wtab-pair">
+            <p class="muted small">
+              On the phone: <em>Developer options → Wireless debugging → Pair device with pairing code</em>.
+              Enter the IP:port and the 6-digit code shown there.
+            </p>
+            <label class="field">
+              <span>Pairing address</span>
+              <input type="text" id="pair-address" placeholder="192.168.1.42:41567" autocomplete="off" spellcheck="false" />
+            </label>
+            <label class="field">
+              <span>Pairing code</span>
+              <input type="text" id="pair-code" placeholder="123456" inputmode="numeric" maxlength="8" autocomplete="off" />
+            </label>
+            <button class="btn btn-primary" id="do-pair">Pair</button>
+            <pre class="output hidden" id="pair-output"></pre>
+          </div>
+
+          <div class="wtab" id="wtab-connect">
+            <p class="muted small">
+              After pairing, connect using the IP:port from the main <em>Wireless debugging</em> screen
+              (the one that says “IP address &amp; Port”).
+            </p>
+            <label class="field">
+              <span>Connection address</span>
+              <input type="text" id="connect-address" placeholder="192.168.1.42:39101" autocomplete="off" spellcheck="false" />
+            </label>
+            <button class="btn btn-primary" id="do-connect">Connect</button>
+            <pre class="output hidden" id="connect-output"></pre>
+          </div>
+
+          <div class="wtab" id="wtab-qr">
+            <p class="muted small">
+              On the phone: <em>Developer options → Wireless debugging → Pair device with QR code</em>,
+              then scan the code below. Twinlink waits for the phone on the network and pairs it
+              automatically.
+            </p>
+            <button class="btn btn-primary" id="do-qr">Show QR code</button>
+            <div class="qr-wrap hidden" id="qr-wrap">
+              <canvas id="qr-canvas" class="qr-canvas" aria-label="Wireless debugging pairing QR code"></canvas>
+              <p class="muted small">
+                Pairing code: <strong id="qr-code">—</strong>
+              </p>
+            </div>
+            <pre class="output hidden" id="qr-output"></pre>
+          </div>
+
+          <div class="wtab" id="wtab-discovered">
+            <p class="muted small">Services advertised by adb over mDNS on this network.</p>
+            <button class="btn btn-small" id="do-discover">Scan</button>
+            <ul class="discovered" id="discovered-list"></ul>
+            <pre class="output hidden" id="discover-output"></pre>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="toasts" id="toasts" aria-live="polite"></div>
+
+    <script type="module" src="js/app.js"></script>
+  </body>
+</html>
