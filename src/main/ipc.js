@@ -107,8 +107,8 @@ function createIpc({ win, runtime }) {
     },
     settingsFile: paths.settingsFile,
     features: {
-      audio: 'experimental',
-      wireless: 'implemented-untested',
+      audio: 'verified',
+      wireless: 'verified',
       recording: 'webm|mp4',
     },
   }));

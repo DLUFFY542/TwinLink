@@ -1047,6 +1047,12 @@ body.is-fullscreen .stage-badges {
   background: var(--warn-bg);
 }
 
+.tag-ok {
+  color: var(--ok);
+  border-color: color-mix(in srgb, var(--ok) 35%, transparent);
+  background: var(--ok-bg);
+}
+
 .field {
   display: flex;
   flex-direction: column;

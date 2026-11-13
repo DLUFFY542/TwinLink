@@ -20,7 +20,7 @@
 │  app.js ─ dashboard.js ─ mirror.js ─ settings.js ─ wireless.js                    │
 │                  │                                                                 │
 │                  ├─ decoder.js → WebCodecs VideoDecoder → Canvas 2D                │
-│                  ├─ audio.js   → WebCodecs AudioDecoder → Web Audio (experimental) │
+│                  ├─ audio.js   → WebCodecs AudioDecoder → Web Audio                │
 │                  └─ input capture → api.mirror.sendInput(...)                      │
 └────────────────────────────────────────────────────────────────────────────────────┘
 ```
@@ -157,13 +157,11 @@ DOM event → mapPoint (canvas rect → video pixels) → IPC → InputInjector
 | Canvas 2D instead of WebGL | Simple, reliable, sufficient for one phone-sized surface |
 | Renderer-side screenshot/recording | No extra device round-trip; the canvas is the source of truth |
 | No renderer framework | Small surface, no build step, easier CSP auditing |
-| Audio opt-in + experimental label | Honest status; avoids blocking video on an unvalidated path |
+| Audio opt-in | Keeps video safe if the device refuses the audio socket; the path itself is hardware-verified |
 
 ## 10. Known limitations
 
-- Audio is implemented but unvalidated on hardware.
-- Wireless is implemented but unvalidated on hardware.
 - Only H.264 is accepted; H.265/AV1 are rejected to avoid silently painting nothing.
 - No clipboard sync (explicitly disabled server-side).
 - No camera/virtual-display modes.
-- Latency has not been measured on a device.
+- Latency was only checked qualitatively on a device, not measured with a tool.

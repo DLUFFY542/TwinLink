@@ -287,11 +287,11 @@
             </section>
 
             <section class="card">
-              <h3>Audio <span class="tag tag-warn">Experimental</span></h3>
+              <h3>Audio <span class="tag tag-ok">Verified</span></h3>
               <p class="muted small">
-                Audio forwarding uses the scrcpy OPUS stream and Web Audio. It is implemented but
-                <strong>has not been validated on a physical device yet</strong> — enable it only to test.
-                Devices on Android 11+ are the most likely to work.
+                Audio forwarding uses the scrcpy OPUS stream and Web Audio. It was confirmed on a
+                physical phone (Android 16). If the device refuses the audio socket, Twinlink keeps
+                mirroring video and reports the fallback.
               </p>
               <label class="toggle">
                 <input type="checkbox" id="set-audio" />

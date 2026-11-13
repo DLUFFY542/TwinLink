@@ -1,7 +1,7 @@
 {
   "name": "twinlink",
   "productName": "Twinlink",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "Plug-and-play Android screen mirroring and control for Windows.",
   "main": "src/main/main.js",
   "author": "Twinlink",

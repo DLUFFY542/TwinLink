@@ -1,9 +1,9 @@
 /**
- * Experimental OPUS playback for scrcpy's audio stream.
+ * OPUS playback for scrcpy's audio stream.
  *
  * The device sends an "OpusHead" config packet followed by OPUS frames. This
- * path is implemented but has not been validated on a physical device, so the
- * UI labels it experimental and failures degrade to video-only mirroring.
+ * path was confirmed on a physical phone (Android 16); failures still degrade
+ * to video-only mirroring so a missing audio socket never stops the screen.
  */
 export class AudioPlayer {
   constructor({ onError } = {}) {

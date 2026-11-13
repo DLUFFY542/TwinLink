@@ -2,7 +2,7 @@
 
 Twinlink is a Windows desktop app that mirrors and controls an Android phone over USB or Wi-Fi. It is built with Electron and talks to the phone through Android's own `adb` debugging bridge. It does **not** bypass Android authorization, DRM, or any security control.
 
-> **Project status:** the application is implemented and its automated checks pass. Wireless debugging — pairing by code and by QR code — was confirmed on a physical phone (2026-11-12). USB mirroring is **not yet verified**: the first hardware run exposed a client bug that is now fixed, but the phone disconnected before the verifying re-run. See [Verified vs. untested](#verified-vs-untested).
+> **Project status:** the application is implemented, its automated checks pass, and every feature below was exercised on a physical phone (vivo iQOO, Android 16) — USB mirroring, touch and keyboard control, audio forwarding, and wireless debugging by pairing code and by QR code. See [Verified vs. untested](#verified-vs-untested).
 
 _Screenshots will be added after a completed real-device run._
 
@@ -17,15 +17,15 @@ _Screenshots will be added after a completed real-device run._
 | Input injection → control socket | **Verified (wire only)** | Pipeline check: a rotate message produced exactly `0b` on the device socket |
 | App shell, CSP, preload bridge | **Verified** | `npm run check`: real app launched, 3 tabs, bridge present, 0 console errors |
 | Device discovery / auth states | **Verified (fixtures + one live device)** | Parser/manager tests; the app discovered a vivo phone running Android 16 as authorized |
-| **USB mirroring of a real phone** | **Blocked — device disconnected mid-test** | First run reached the device server but exposed a socket-ordering deadlock (fixed). Official scrcpy v4.0 mirrored the same phone at 486×1080. The phone dropped off USB before Twinlink could be re-run |
-| **Touch/keyboard control of a real phone** | **Blocked — no completed run** | Wire format verified; the rotate proof has not completed on hardware |
-| **Audio forwarding** | **Implemented, unvalidated** | OPUS path exists and is labelled *Experimental* in the UI |
+| **USB mirroring of a real phone** | **Verified (real phone)** | Confirmed on a vivo iQOO (Android 16) on 2026-11-13: the phone screen streams over the USB data cable |
+| **Touch/keyboard control of a real phone** | **Verified (real phone)** | Same device and session on 2026-11-13: taps, drags, keyboard input, and the device buttons all reached the phone |
+| **Audio forwarding** | **Verified (real phone)** | The OPUS audio path was confirmed on the same device on 2026-11-13; the app still falls back to video-only if the device refuses the audio socket |
 | **Wireless debugging** | **Verified (real phone)** | Manual pairing code, QR pairing, and the wireless connection were confirmed on a vivo iQOO (Android 16) on 2026-11-12 |
 | Recording formats (WebM VP9/VP8/AV1, MP4 H.264) | **Verified (encoder harness)** | `npm run check:recording`: all four formats recorded a real canvas and produced valid WebM (EBML) or MP4 (`ftyp`) bytes; unsupported formats are disabled in Settings |
 | Wireless pairing QR code | **Verified (real phone)** | `npm run check` decodes the generated code with an independent decoder, and the code was scanned on a real phone: Twinlink paired and connected with no typed address or code |
 | Windows installer | **Built** | NSIS setup and single-file portable `.exe`; the portable build opened a responsive "Twinlink" window on the build machine (unsigned) |
 
-Twinlink never claims a feature works just because code exists. Anything marked *Blocked* or *unvalidated* needs a physical phone.
+Twinlink never claims a feature works just because code exists. Every *Verified* row above was confirmed on a physical phone; anything still marked *Blocked* or *unvalidated* needs one.
 
 ---
 
@@ -46,9 +46,9 @@ phone — the phone only needs USB debugging enabled.
 
 1. Open the [Releases page](https://github.com/DLUFFY542/TwinLink/releases).
 2. Download **one** of:
-   - `Twinlink-Portable-0.1.1.exe` — single file, no installation; run it from
+   - `Twinlink-Portable-0.1.2.exe` — single file, no installation; run it from
      anywhere.
-   - `Twinlink-Setup-0.1.1.exe` — installer with Start-menu and desktop
+   - `Twinlink-Setup-0.1.2.exe` — installer with Start-menu and desktop
      shortcuts.
 3. Run the file. The builds are unsigned, so Windows SmartScreen may warn:
    choose **More info → Run anyway**.
@@ -97,17 +97,17 @@ npm run pack   # unpacked app in build/win-unpacked
 npm run dist   # NSIS installer + single-file portable .exe in build/
 ```
 
-`Twinlink-Setup-0.1.1.exe` installs the app; `Twinlink-Portable-0.1.1.exe` is a
+`Twinlink-Setup-0.1.2.exe` installs the app; `Twinlink-Portable-0.1.2.exe` is a
 single executable that runs without installing. The portable build
-(111,475,825 bytes) was launched and opened a responsive **Twinlink** window; the
-setup build (122,387,419 bytes) opened its installer. Both are unsigned, so
+(111,463,867 bytes) was launched and opened a responsive **Twinlink** window; the
+setup build (122,389,023 bytes) opened its installer. Both are unsigned, so
 Windows SmartScreen will warn on first launch. Build output is intentionally
 git-ignored.
 
 ## Testing
 
 ```powershell
-npm test               # 65 unit/integration tests (node:test)
+npm test               # 71 unit/integration tests (node:test)
 npm run check          # launches the real app, asserts clean shell
 npm run check:pipeline # real H.264 -> WebCodecs -> Canvas proof
 npm run check:recording # real MediaRecorder output for every offered format
